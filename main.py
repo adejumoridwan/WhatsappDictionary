@@ -1,11 +1,9 @@
 from fastapi import FastAPI, Form
 import requests
-from utils import send_message, logger
+from utils import send_message
 from dotenv import load_dotenv
 import os
-import json
 from typing import List
-import re
 from models import dictionary_collection
 
 load_dotenv()
@@ -31,11 +29,8 @@ async def reply(Body: str = Form()):
         dictionary_db = {"word":Body, "definition":definition}
         dictionary_collection.insert_one(dictionary_db)
 
-        logger.info(f"Definition:{definition}")
-
     else:
         return send_message(whatsapp_number, flag)
-    
     
     return ""
 
